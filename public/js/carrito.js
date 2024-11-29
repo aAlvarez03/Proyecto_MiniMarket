@@ -13,7 +13,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+document.addEventListener("DOMContentLoaded", async() => {
+    let DB = await DatabaseCarrito.openDatabase();
+
+    //Mostramos todos los productos
+    let productos = await DatabaseCarrito.getAllProducts(DB);
+    console.log(productos);
+
+    DB.close();
+})
+
 
 export class Carrito{
-    
+    static async aniadirProductoCarrito(producto){
+        DatabaseCarrito.openDatabase()
+            .then(db => {
+                
+            })
+            .catch(error => console.log(error));
+    }
 }
