@@ -10,12 +10,14 @@ body{
     font-family: "Poppins", serif;
 }
 
+/* Estilos del index */
 .descriptionMain{
     background-image: url("../images/background2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 350px;
+    margin-top: 80px;
 }
 
 .descriptionContainer{
@@ -37,9 +39,12 @@ body{
     width: 70%;
 }
 
+.mainContainer{
+    margin-top: 80px;
+}
+
 .mainContainer h1{
     text-align: center;
-    margin-top: 30px;
 }
 
 .productsContainer{
@@ -52,6 +57,7 @@ body{
     width: 30%;
     margin: 40px;
     padding: 10px;
+    box-shadow: 0px 0px 20px 0px #000000;   
 }
 
 .priceText{
@@ -70,4 +76,32 @@ body{
     margin-left: 50px;
 }
 
+.fa-circle-check{
+    margin-right: 10px;
+}
 
+
+/* Estilos del carrito */
+
+.table{
+    margin-top: 80px;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 991px) {
+   .card{
+    width: 70%;
+   }
+}
+
+@media screen and (max-width: 768px) {
+    .card{
+     width: 100%;
+     text-align: center;
+    }
+
+    .card img{
+        width: 50%;
+    }
+ }

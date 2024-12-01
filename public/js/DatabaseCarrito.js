@@ -5,8 +5,8 @@ export class DatabaseCarrito{
             openReq.addEventListener('upgradeneeded', e =>{
                 console.log("db actualizada a v1");
                 let db = e.target.result;
-                if(!db.objectStoreName.contains('products')){
-                    db.createObjectStore('products', {autoIncrement: true, keyPath: 'idDB'})
+                if(!db.objectStoreNames.contains('products')){
+                    db.createObjectStore('products', {autoIncrement: true, keyPath: 'idDB'});
                 }
             });
 
@@ -20,20 +20,29 @@ export class DatabaseCarrito{
 
     static getAllProducts(db){
         return new Promise((resolve, reject) => {
-            let store = db.transaction('product', 'readonly').objectStore('products');
-            let getReq = store.All();
-            // Si se obtiene todos los productos los devuelve
-            getReq.addEventListener('success', e => resolve(e.target.result)); //OK
-            getReq.addEventListener('error', e => reject('Error al obtener los productos'));
+            try{
+
+                let store = db.transaction('products', 'readonly').objectStore('products');
+                let getReq = store.getAll();
+                // Si se obtiene todos los productos los devuelve
+                getReq.addEventListener('success', e => resolve(e.target.result)); //OK
+                getReq.addEventListener('error', e => reject('Error al obtener los productos'));
+            }catch(error){
+                reject('Error en la transacción de getAllProducts ' + error.message);
+            }
         });
     }
 
     static deleteDabase(){
         return new Promise((resolve, reject) => {
-            let deleteReq = indexedDB.deleteDatabase('Carrito');
-            deleteReq.addEventListener('success', e => resolve()); //Borrada
-            deleteReq.addEventListener('error', e => reject("Error al borrar la BD"));
-            deleteReq.addEventListener('blocked', e => reject("Debes cerrar la BD primero"));
+            try{
+                let deleteReq = indexedDB.deleteDatabase('Carrito');
+                deleteReq.addEventListener('success', e => resolve()); //Borrada
+                deleteReq.addEventListener('error', e => reject("Error al borrar la BD"));
+                deleteReq.addEventListener('blocked', e => reject("Debes cerrar la BD primero"));
+            } catch(error){
+                console.log('Error', error.message);
+            }
         });
     }
 
@@ -48,10 +57,22 @@ export class DatabaseCarrito{
 
     static insertProduct(db, producto){
         return new Promise((resolve, reject) => {
-            let store = db.transaction('products', 'readwrite').objectStore('products');
-            let addReq = store.add(producto);
-            addReq.addEventListener('success', e => resolve(e.target.result)); // OK
-            addReq.addEventListener('error', e => reject("No se puede añadir el producto"));
+            if(!db){
+                console.log("No se pudo acceder a la base de datos");
+                return;
+            }
+
+            try{
+                let store = db.transaction("products", "readwrite").objectStore("products");
+                let addReq = store.add(producto);
+                addReq.addEventListener('success', e => {
+                    producto.idDB = e.target.result;
+                    resolve(producto);
+                }); // OK
+                addReq.addEventListener('error', () => reject("No se puede añadir el producto"));
+            } catch(error){
+                reject('Error en la transacción ' + error.message);
+            }
         });
     }
 
