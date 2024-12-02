@@ -1,3 +1,4 @@
+// Metodo para cargar el header
 export async function cargarHeader() {
   try {
     const headerContainer = document.getElementById("headerContainer");
@@ -13,6 +14,7 @@ export async function cargarHeader() {
   }
 }
 
+// Metodo para mostrar los enlaces activos
 function activarEnlace() {
   // Variables
   let inicioLink = document.getElementById("inicioLink");

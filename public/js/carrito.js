@@ -5,7 +5,7 @@ import { cargarHeader } from "./header.js";
 
 
 // evento para cargar el header
-if(window.location.pathname.includes("carrito.html")){
+if(window.location.pathname.includes("carrito.html")){ // Si estamos en la pagina "carrito.html", entonces que se ejecute el evento
   document.addEventListener("DOMContentLoaded", async () => {
     try {
       // Cargamos el header

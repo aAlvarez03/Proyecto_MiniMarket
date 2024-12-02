@@ -1,4 +1,5 @@
 export class DatabaseCarrito{
+    // Metodo estatico para abrir la BD
     static openDatabase(){
         return new Promise((resolve, reject) =>{
             let openReq = indexedDB.open('Carrito', 1);
@@ -18,6 +19,7 @@ export class DatabaseCarrito{
         });
     }
 
+    // Metodo estatico para obtener todos los productos de la BD
     static getAllProducts(db){
         return new Promise((resolve, reject) => {
             try{
@@ -33,6 +35,7 @@ export class DatabaseCarrito{
         });
     }
 
+    // Metodo estatico para eliminar la BD
     static deleteDabase(){
         return new Promise((resolve, reject) => {
             try{
@@ -46,6 +49,7 @@ export class DatabaseCarrito{
         });
     }
 
+    // Metodo estatico para obtener un producto en particular
     static getProduct(db, key){
         return new Promise((resolve, reject) => {
             let store = db.transaction('products', 'readonly').objectStore('products');
@@ -55,6 +59,7 @@ export class DatabaseCarrito{
         });
     }
 
+    // Metodo estatico para insertar un producto en la BD
     static insertProduct(db, producto){
         return new Promise((resolve, reject) => {
             if(!db){
@@ -76,6 +81,7 @@ export class DatabaseCarrito{
         });
     }
 
+    // Metodo estatico para actualizar un producto
     static updateProduct(db, producto, key = null){
         return new Promise((resolve, reject) => {
             let store = db.transaction('products', 'readwrite').objectStore('products');
@@ -86,6 +92,7 @@ export class DatabaseCarrito{
         })
     }
 
+    // Metodo estatico para eliminar un producto de la BD
     static deleteProduct(db, key){
         return new Promise((resolve, reject) => {
             let store = db.transaction('products', 'readwrite').objectStore('products');
